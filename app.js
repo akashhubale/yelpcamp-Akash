@@ -53,7 +53,8 @@ const secret = process.env.SECRET || "thisshouldbebettersecret"
 const store = new MongoStore({
     url: dbUrl,
     secret,
-    touchAfter: 24 * 60 * 60
+    touchAfter: 24 * 60 * 60,
+    url: dbUrl
 })
 
 store.on("error", function () {
