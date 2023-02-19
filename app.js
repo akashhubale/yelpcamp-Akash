@@ -32,9 +32,7 @@ mongoose.connect(dbUrl, {
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"))
-db.once("open", () => {
-    console.log("Database connected")
-})
+
 
 const app = express();
 
@@ -170,6 +168,10 @@ app.use((err, req, res, next) => {
 })
 
 const port = process.env.PORT_NO || 3000
-app.listen(port, () => {
-    console.log(`Serving on port ${port}`)
+db.once("open", () => {
+    console.log("Database connected")
+
+    app.listen(port, () => {
+        console.log(`Serving on port ${port}`)
+    })
 })
