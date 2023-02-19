@@ -25,16 +25,31 @@ const { default: helmet } = require("helmet");
 const { Session } = require("express-session");
 const dbUrl = process.env.MONGODB_URI
 
-mongoose.connect(dbUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+// mongoose.connect(dbUrl, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// });
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error"))
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "connection error"))
+
+// db.once("open", () => {
+//     console.log("Database connected")
+// })
 
 
 const app = express();
+
+mongoose.set("strictQuery", false);
+const connect = async () => {
+    try {
+        const conn = await mongoose.connect(process.env.MONGODB_URI);
+        console.log("database connected")
+    } catch (error) {
+        console.log(error);
+        process.exit(1);
+    }
+}
 
 
 app.set("view engine", "ejs");
@@ -169,10 +184,9 @@ app.use((err, req, res, next) => {
 })
 
 const port = process.env.PORT_NO || 3000
-db.once("open", () => {
-    console.log("Database connected")
-
+connect().then(() => {
     app.listen(port, () => {
         console.log(`Serving on port ${port}`)
     })
 })
+
