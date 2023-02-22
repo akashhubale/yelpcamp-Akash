@@ -184,6 +184,7 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT_NO || 3000
 connect().then(() => {
+    if (err) { console.error(err); return false; }
     app.listen(port, () => {
         console.log(`Serving on port ${port}`)
     })
