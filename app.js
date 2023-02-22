@@ -43,7 +43,7 @@ const app = express();
 mongoose.set("strictQuery", false);
 const connect = async () => {
     try {
-        const conn = await mongoose.connect(process.env.MONGODB_URI);
+        const conn = await mongoose.connect(dbUrl);
         console.log("database connected")
     } catch (error) {
         console.log(error);
@@ -66,10 +66,9 @@ app.use(mongoSanitize({
 const secret = process.env.SECRET || "thisshouldbebettersecret"
 
 const store = new MongoStore({
-    url: process.env.MONGODB_URI,
+    url: dbUrl,
     secret,
     touchAfter: 24 * 60 * 60,
-    url: dbUrl
 })
 
 store.on("error", function () {
