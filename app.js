@@ -43,7 +43,7 @@ const app = express();
 mongoose.set("strictQuery", false);
 const connect = async () => {
     try {
-        const conn = await mongoose.connect(dbUrl);
+        const conn = await mongoose.connect(dbUrl)
         console.log("database connected")
     } catch (error) {
         console.log(error);
@@ -182,11 +182,9 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render("error", { err })
 })
 
-const port = process.env.PORT_NO || 3000
-connect().then(() => {
-    if (err) { console.error(err); return false; }
-    app.listen(port, () => {
-        console.log(`Serving on port ${port}`)
-    })
+const port = process.env.PORT_NO || 5000
+
+app.listen(port, () => {
+    console.log(`Serving on port ${port}`)
 })
 
