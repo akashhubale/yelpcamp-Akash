@@ -184,7 +184,10 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT_NO || 5000
 
-app.listen(port, () => {
-    console.log(`Serving on port ${port}`)
+connect().then(() => {
+    console.log("db connected");
+    app.listen(port, () => {
+        console.log("listening for requests");
+    })
 })
 
