@@ -24,7 +24,7 @@ const reviewRoutes = require("./routes/reviews");
 const { default: helmet } = require("helmet");
 const { Session } = require("express-session");
 // const dbUrl = process.env.MONGODB_URI
-const dbUrl = "mongodb://localhost:27017/yelp-camp"
+const dbUrl = process.env.MONGOBD_URI || "mongodb://localhost:27017/yelp-camp"
 
 
 mongoose.connect(dbUrl, {
