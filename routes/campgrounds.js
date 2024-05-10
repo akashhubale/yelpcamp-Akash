@@ -12,7 +12,7 @@ const upload = multer({ storage, limits })
 
 
 
-router.route("/")
+router.route("")
     .get(catchAsync(campgrounds.index))
     .post(isLoggedIn, upload.array("image"), validateCampground, catchAsync(campgrounds.createCampground))
 

@@ -23,33 +23,35 @@ const campgroundRoutes = require("./routes/campgrounds")
 const reviewRoutes = require("./routes/reviews");
 const { default: helmet } = require("helmet");
 const { Session } = require("express-session");
-const dbUrl = process.env.MONGODB_URI
+// const dbUrl = process.env.MONGODB_URI
+const dbUrl = "mongodb://localhost:27017/yelp-camp"
 
-// mongoose.connect(dbUrl, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-// });
 
-// const db = mongoose.connection;
-// db.on("error", console.error.bind(console, "connection error"))
+mongoose.connect(dbUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
-// db.once("open", () => {
-//     console.log("Database connected")
-// })
-
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error"))
+db.once("open", () => {
+    console.log("Database connected")
+})
 
 const app = express();
 
-mongoose.set("strictQuery", false);
-const connect = async () => {
-    try {
-        const conn = await mongoose.connect(dbUrl)
-        console.log("database connected")
-    } catch (error) {
-        console.log(error);
-        process.exit(1);
-    }
-}
+// mongoose.connect(
+//     dbUrl,
+//     { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
+//     () => {
+//         console.log('Connected to MongoDB');
+//     }
+// )
+
+
+
+const port = process.env.PORT_NO || 5000
+
 
 
 app.set("view engine", "ejs");
@@ -182,9 +184,11 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render("error", { err })
 })
 
-const port = process.env.PORT_NO || 5000
+
+
 
 app.listen(port, () => {
     console.log(`Serving on port ${port}`)
 })
+
 

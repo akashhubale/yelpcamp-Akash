@@ -1,6 +1,5 @@
 const { campgroundSchema, reviewSchema } = require("./schemas.js")
 const ExpressError = require("./utils/ExpressError")
-const campground = require("./models/campground")
 const Review = require("./models/review");
 const Campground = require("./models/campground");
 
