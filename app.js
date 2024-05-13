@@ -1,6 +1,6 @@
-if (process.env.NODE_ENV !== "production") {
-    require("dotenv").config();
-}
+
+require("dotenv").config();
+
 
 const express = require("express");
 const path = require("path");
@@ -18,13 +18,15 @@ const MongoStore = require("connect-mongo")(session)
 // const helmet = require("helmet");
 
 
+
+
 const userRoutes = require("./routes/users")
 const campgroundRoutes = require("./routes/campgrounds")
 const reviewRoutes = require("./routes/reviews");
 const { default: helmet } = require("helmet");
-const { Session } = require("express-session");
-// const dbUrl = process.env.MONGODB_URI
-const dbUrl = process.env.MONGOBD_URI || "mongodb://localhost:27017/yelp-camp"
+
+const dbUrl = process.env.MONGODB_URI
+
 
 
 mongoose.connect(dbUrl, {
@@ -36,6 +38,7 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"))
 db.once("open", () => {
     console.log("Database connected")
+
 })
 
 const app = express();
@@ -73,6 +76,8 @@ const store = new MongoStore({
     touchAfter: 24 * 60 * 60,
 })
 
+
+
 store.on("error", function () {
     console.log("STORE ERROR")
 })
@@ -90,6 +95,7 @@ const sessionconfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
+
 
 
 
